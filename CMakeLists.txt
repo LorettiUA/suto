@@ -5,12 +5,12 @@ set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 project(helloworld VERSION ${PROJECT_VESRION})
 
-option(WITH_BOOST_TEST "Whether to build Boost test" ON)
+option(WITH_BOOST_TEST "Whether to build Boost test" OFF)
 
-configure_file(version.h.in version.h)
+configure_file(Development/version.h.in version.h)
 
-add_executable(helloworld_cli main.cpp)
-add_library(helloworld lib.cpp)
+add_executable(helloworld_cli Development/main.cpp)
+add_library(helloworld Development/lib.cpp)
 
 set_target_properties(helloworld_cli helloworld PROPERTIES
     CXX_STANDARD 14
