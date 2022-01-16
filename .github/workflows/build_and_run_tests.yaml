@@ -28,6 +28,9 @@ jobs:
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
+      - run: pwd && ls ${{github.workspace}}/build
+      - run: ls ${{github.workspace}}/build/bin
+
       - name: Test
         working-directory: ${{github.workspace}}/build
         # Execute tests defined by the CMake configuration.
