@@ -2,11 +2,10 @@ name: 'C++ CI'
 
 on:
   push:
-    branches:
-      - release
-      - feature/github_actions
-      - develop
+    tags:
+      - v*
 
+name: Build and release
 jobs:
   build:
     runs-on: ubuntu-latest
