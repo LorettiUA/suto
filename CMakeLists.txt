@@ -35,19 +35,21 @@ target_link_libraries(helloworld_cli
 
 if(WITH_GOOGLE_TEST)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    add_subdirectory(Modules/GTests)
+    add_subdirectory(Modules/GTests EXCLUDE_FROM_ALL)
     enable_testing()
     add_executable(test_version
         Development/tests/main.cpp
         Development/tests/test_version.cpp)
 
-    set_target_properties(test_version PROPERTIES
-        CXX_STANDARD 17
-        CXX_STANDARD_REQUIRED ON
+    set_target_properties(test_version
+        PROPERTIES
+            CXX_STANDARD 17
+            CXX_STANDARD_REQUIRED ON
     )
 
-    set_target_properties(test_version PROPERTIES
-        COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK)
+    set_target_properties(test_version
+        PROPERTIES
+            COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK)
 
     target_include_directories(test_version
         PRIVATE
