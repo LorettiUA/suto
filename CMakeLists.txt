@@ -47,14 +47,10 @@ if(WITH_GOOGLE_TEST)
             CXX_STANDARD_REQUIRED ON
     )
 
-    set_target_properties(test_version
-        PROPERTIES
-            COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK)
-
     target_include_directories(test_version
         PRIVATE
             ${gtest_SOURCE_DIR}/include
-            Development/
+            Development
     )
 
     target_link_libraries(test_version
