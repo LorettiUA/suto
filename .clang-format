@@ -1,0 +1,88 @@
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+#
+# find . -regex '.*\.\(cpp\|hpp\|cc\|cxx\)' -exec clang-format -style=file -i {} \;
+
+Language: Cpp
+Standard: c++17
+BasedOnStyle: Microsoft
+SortIncludes: true
+IncludeBlocks: Preserve
+ColumnLimit:     90
+
+AlignAfterOpenBracket: Align
+# AlignArrayOfStructures: Right
+AlignOperands: AlignAfterOperator
+AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
+AlignConsecutiveMacros: AcrossEmptyLinesAndComments
+AlignEscapedNewlines: Right
+AlignOperands: AlignAfterOperator
+AlignTrailingComments: true
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortLambdasOnASingleLine: None
+AlwaysBreakAfterReturnType: None
+
+BinPackArguments: false
+BinPackParameters: false
+BraceWrapping:
+  AfterCaseLabel:		true
+  AfterClass:      		true
+  AfterControlStatement: Always
+  AfterEnum:       		true
+  AfterFunction:   		true
+  AfterNamespace:  		true
+  AfterObjCDeclaration: true
+  AfterStruct:     		true
+  AfterUnion:      		true
+  AfterExternBlock:		true
+  BeforeCatch:     		true
+  BeforeElse:      		true
+  BeforeLambdaBody:		true
+  BeforeWhile:			true
+  IndentBraces:    		false
+  SplitEmptyFunction:	false
+  SplitEmptyRecord: 	false
+  SplitEmptyNamespace:	false
+BreakBeforeBraces: Custom
+BreakBeforeConceptDeclarations: true
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeComma
+BreakInheritanceList: BeforeComma
+Cpp11BracedListStyle: true
+EmptyLineBeforeAccessModifier: Always
+FixNamespaceComments: true
+IndentCaseLabels: false
+IndentExternBlock: true
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: Inner
+# PackConstructorInitializers: Never  - clang 14
+PointerAlignment: Left
+# QualifierAlignment - clang 14
+# QualifierOrder - clang 14
+# ReferenceAlignment: Left - clang 14
+ReflowComments: true
+# SortIncludes: CaseSensitive - clang 4
+SpaceAfterCStyleCast: true
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: false
+SpaceAroundPointerQualifiers: Before
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: true
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeParens: Never
+SpaceBeforeRangeBasedForLoopColon: false
+SpaceInEmptyBlock: false
+SpaceInEmptyParentheses: false
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInConditionalStatement: false
+SpacesInContainerLiterals: true
+SpacesInParentheses: false
+SpacesInSquareBrackets: true
+UseTab: Never

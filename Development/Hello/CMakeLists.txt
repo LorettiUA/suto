@@ -9,6 +9,7 @@ configure_file(version.h.in version.h)
 
 # # # _ _ _ _ _ _ _ _ P R O J E C T _ L I B _ _ _ _ _ _ _ # # #
 add_library(helloworld
+    lib.h
     lib.cpp
 )
 
