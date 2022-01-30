@@ -19,3 +19,5 @@ option(WITH_GOOGLE_TEST "Whether to build Google tests" OFF)
  endif()
 
 add_subdirectory(Development/Hello)
+add_subdirectory(Development/TypeDeduction)
+add_subdirectory(Development/IpFilter)
