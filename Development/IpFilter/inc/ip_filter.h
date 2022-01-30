@@ -2,12 +2,12 @@
 #include <string>
 #include <vector>
 
-using IpAddress = std::vector<std::string>;
+using IpAddress = std::vector<int>;
 using IpPool    = std::vector<IpAddress>;
 
-IpPool read_ip_pool();
-
 std::vector<std::string> split_string(const std::string& str, char d);
+
+IpPool read_ip_pool();
 
 void print_ip_pool(IpPool const& ip_pool);
 

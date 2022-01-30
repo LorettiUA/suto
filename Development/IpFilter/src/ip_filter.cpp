@@ -4,17 +4,6 @@
 #include <iostream>
 #include <tuple>
 
-IpPool read_ip_pool()
-{
-    IpPool pool;
-    for(std::string line; std::getline(std::cin, line);)
-    {
-        std::vector<std::string> v = split_string(line, '\t');
-        pool.push_back(split_string(v.at(0), '.'));
-    }
-    return pool;
-}
-
 std::vector<std::string> split_string(const std::string& str, char delim)
 {
     std::vector<std::string> r;
@@ -34,19 +23,25 @@ std::vector<std::string> split_string(const std::string& str, char delim)
     return r;
 }
 
+IpPool read_ip_pool()
+{
+    IpPool pool;
+    for(std::string line; std::getline(std::cin, line);)
+    {
+        std::vector<std::string> v = split_string(line, '\t');
+        auto const octets          = split_string(v.at(0), '.');
+        pool.push_back(IpAddress {
+            stoi(octets[ 0 ]), stoi(octets[ 1 ]), stoi(octets[ 2 ]), stoi(octets[ 3 ])});
+    }
+    return pool;
+}
+
 void print_ip_pool(IpPool const& ip_pool)
 {
     for(auto const& ip: ip_pool)
     {
-        for(auto const& octet: ip)
-        {
-            if(octet != ip.front())
-            {
-                std::cout << ".";
-            }
-            std::cout << octet;
-        }
-        std::cout << std::endl;
+        std::cout << ip[ 0 ] << '.' << ip[ 1 ] << '.' << ip[ 2 ] << '.' << ip[ 3 ]
+                  << std::endl;
     }
 }
 
@@ -57,11 +52,8 @@ void sort_ip_addresses(IpPool& ip_pool)
 
 bool is_ip_greater(IpAddress const& lhs, IpAddress const& rhs)
 {
-    auto const ip_left =
-        std::make_tuple(stoi(lhs[ 0 ]), stoi(lhs[ 1 ]), stoi(lhs[ 2 ]), stoi(lhs[ 3 ]));
-
-    auto const ip_right =
-        std::make_tuple(stoi(rhs[ 0 ]), stoi(rhs[ 1 ]), stoi(rhs[ 2 ]), stoi(rhs[ 3 ]));
+    auto const ip_left  = std::make_tuple(lhs[ 0 ], lhs[ 1 ], lhs[ 2 ], lhs[ 3 ]);
+    auto const ip_right = std::make_tuple(rhs[ 0 ], rhs[ 1 ], rhs[ 2 ], rhs[ 3 ]);
 
     return ip_left > ip_right;
 }
@@ -75,7 +67,7 @@ IpPool filter_ip_addresses(IpPool const& ip_pool, int octet)
                  std::back_inserter(pool),
                  [ &octet ](IpAddress const& ip)
                  {
-                     return ip.front() == std::to_string(octet);
+                     return ip.front() == octet;
                  });
     return pool;
 }
@@ -89,8 +81,7 @@ IpPool filter_ip_addresses(IpPool const& ip_pool, int octet1, int octet2)
                  std::back_inserter(pool),
                  [ &octet1, &octet2 ](IpAddress const& ip)
                  {
-                     return ip[ 0 ] == std::to_string(octet1) ||
-                            ip[ 1 ] == std::to_string(octet2);
+                     return ip[ 0 ] == octet1 && ip[ 1 ] == octet2;
                  });
     return pool;
 }
@@ -106,9 +97,9 @@ IpPool filter_any_octet(IpPool const& ip_pool, int octet)
                  {
                      return std::any_of(ip.cbegin(),
                                         ip.cend(),
-                                        [ &octet ](std::string const& oct)
+                                        [ &octet ](auto ip_oct)
                                         {
-                                            return std::atoi(oct.c_str()) == octet;
+                                            return ip_oct == octet;
                                         });
                  });
     return pool;
