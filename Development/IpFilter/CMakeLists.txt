@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(PATCH_VERSION "3" CACHE INTERNAL "Patch version")
-set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+#set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+#set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 project(ip_filter VERSION ${PROJECT_VESRION})
+
+configure_file(version.h.in version.h)
 
 # # # _ _ _ _ _ _ _ _ P R O J E C T _ L I B _ _ _ _ _ _ _ # # #
 set(PROJECT_LIB_NAME ${PROJECT_NAME}_lib)
