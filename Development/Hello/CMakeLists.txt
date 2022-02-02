@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(PATCH_VERSION "3" CACHE INTERNAL "Patch version")
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
-project(helloworld VERSION ${PROJECT_VESRION})
+project(version VERSION ${PROJECT_VESRION})
 
 configure_file(version.h.in version.h)
 
 # # # _ _ _ _ _ _ _ _ P R O J E C T _ L I B _ _ _ _ _ _ _ # # #
-add_library(helloworld
+add_library(version
     lib.h
     lib.cpp
 )
 
-target_include_directories(helloworld
+target_include_directories(version
     PUBLIC
         "${CMAKE_CURRENT_SOURCE_DIR}"
     PRIVATE
@@ -21,83 +21,84 @@ target_include_directories(helloworld
 )
 
 # # # _ _ _ _ _ _ _ _ _ _ P R O J E C T _ _ _ _ _ _ _ _ _ _ # # #
-add_executable(helloworld_cli
+add_executable(version_cli
     main.cpp
 )
 
-set_target_properties(helloworld_cli helloworld PROPERTIES
+set_target_properties(version_cli version PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 
-target_link_libraries(helloworld_cli
+target_link_libraries(version_cli
     PRIVATE
-        helloworld
+        version
 )
 
 # # # _ _ _ _ _ _ _ _ _ _ _ T E S T S _ _ _ _ _ _ _ _ _ _ _ # # #
  if(WITH_GOOGLE_TEST)
-    add_executable(test_version
+    set(PROJECT_TESTS_NAME ${PROJECT_NAME}_tests)
+    add_executable(${PROJECT_TESTS_NAME}
         tests/main.cpp
         tests/test_version.cpp
     )
 
-    set_target_properties(test_version
+    set_target_properties(${PROJECT_TESTS_NAME}
         PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
     )
 
-    target_include_directories(test_version
+    target_include_directories(${PROJECT_TESTS_NAME}
         PRIVATE
             ${gtest_SOURCE_DIR}/include
     )
 
-    target_link_libraries(test_version
+    target_link_libraries(${PROJECT_TESTS_NAME}
         PRIVATE
             GTest::gtest
             GTest::gtest_main
-            helloworld
+            version
     )
 endif()
 
 if (MSVC)
-    target_compile_options(helloworld
+    target_compile_options(version
         PRIVATE
             /W4
     )
 
-    target_compile_options(helloworld_cli
+    target_compile_options(version_cli
         PRIVATE
             /W4
     )
 
     if(WITH_GOOGLE_TEST)
-        target_compile_options(test_version
+        target_compile_options(${PROJECT_TESTS_NAME}
             PRIVATE
                 /W4
         )
     endif()
 else ()
-    target_compile_options(helloworld
+    target_compile_options(version
         PRIVATE
             -Wall -Wextra -pedantic -Werror
     )
 
-    target_compile_options(helloworld_cli
+    target_compile_options(version_cli
         PRIVATE
             -Wall -Wextra -pedantic -Werror
     )
 
     if(WITH_GOOGLE_TEST)
-        target_compile_options(test_version
+        target_compile_options(${PROJECT_TESTS_NAME}
             PRIVATE
                 -Wall -Wextra -pedantic -Werror
         )
     endif()
 endif()
 
-install(TARGETS helloworld_cli RUNTIME DESTINATION bin)
+install(TARGETS version_cli RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
@@ -107,5 +108,5 @@ set(CPACK_PACKAGE_CONTACT example@example.com)
 include(CPack)
 
 if(WITH_GOOGLE_TEST)
-    add_test(test_version test_version)
+    add_test(${PROJECT_TESTS_NAME} ${PROJECT_TESTS_NAME})
 endif()

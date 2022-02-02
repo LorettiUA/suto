@@ -5,8 +5,6 @@ set(PROJECT_VESRION 0.0.${PATCH_VERSION})
 
 project(ip_filter VERSION ${PROJECT_VESRION})
 
-#configure_file(version.h.in version.h)
-
 # # # _ _ _ _ _ _ _ _ P R O J E C T _ L I B _ _ _ _ _ _ _ # # #
 set(PROJECT_LIB_NAME ${PROJECT_NAME}_lib)
 
