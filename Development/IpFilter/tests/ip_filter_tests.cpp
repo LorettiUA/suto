@@ -5,10 +5,10 @@
 
 namespace tests
 {
-IpAddress const ip_0 = {"153", "130", "177", "64"};
-IpAddress const ip_1 = {"222", "115", "157", "64"};
-IpAddress const ip_2 = {"222", "130", "177", "64"};
-IpAddress const ip_3 = {"222", "168", "177", "64"};
+IpAddress const ip_0 {153, 130, 177, 64};
+IpAddress const ip_1 {222, 115, 157, 64};
+IpAddress const ip_2 {222, 130, 177, 64};
+IpAddress const ip_3 {222, 168, 177, 64};
 
 TEST(FilterTest, Comparator)
 {
@@ -36,7 +36,9 @@ IpPool read_ip_pool_from_lines(std::vector<std::string> const& lines)
     for(auto const& line: lines)
     {
         std::vector<std::string> v = split_string(line, '\t');
-        pool.push_back(split_string(v.at(0), '.'));
+        auto const s               = split_string(v.at(0), '.');
+        IpAddress ip {stoi(s[ 0 ]), stoi(s[ 1 ]), stoi(s[ 2 ]), stoi(s[ 3 ])};
+        pool.emplace_back(ip);
     }
     return pool;
 }
@@ -46,7 +48,7 @@ TEST(FilterTest, SortOrigPool)
     IpPool p = read_ip_pool_from_lines(lines_from_cin);
     sort_ip_addresses(p);
 
-    IpAddress first_ip = {"222", "173", "235", "246"};
+    IpAddress first_ip = {222, 173, 235, 246};
     EXPECT_EQ(first_ip, p[ 0 ]);
 }
 
@@ -56,7 +58,7 @@ TEST(FilterTest, FilterIp)
     sort_ip_addresses(p);
 
     auto p_fxxx        = filter_ip_addresses(p, 1);
-    IpAddress first_ip = {"1", "231", "69", "33"};
+    IpAddress first_ip = {1, 231, 69, 33};
 
     EXPECT_EQ(first_ip, p_fxxx.front());
 }
@@ -67,7 +69,7 @@ TEST(FilterTest, FilterIp2)
     sort_ip_addresses(p);
 
     auto p_ffxx        = filter_ip_addresses(p, 46, 70);
-    IpAddress first_ip = {"46", "70", "225", "39"};
+    IpAddress first_ip = {46, 70, 225, 39};
 
     EXPECT_EQ(first_ip, p_ffxx.front());
 }
@@ -78,7 +80,7 @@ TEST(FilterTest, FilterAnyIp)
     sort_ip_addresses(p);
 
     auto p_any         = filter_any_octet(p, 46);
-    IpAddress first_ip = {"186", "204", "34", "46"};
+    IpAddress first_ip = {186, 204, 34, 46};
 
     EXPECT_EQ(first_ip, p_any.front());
 }

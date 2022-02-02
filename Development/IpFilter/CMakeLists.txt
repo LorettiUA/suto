@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(ip_filter)
+set(PATCH_VERSION "3" CACHE INTERNAL "Patch version")
+set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+
+project(ip_filter VERSION ${PROJECT_VESRION})
+
+#configure_file(version.h.in version.h)
 
 # # # _ _ _ _ _ _ _ _ P R O J E C T _ L I B _ _ _ _ _ _ _ # # #
 set(PROJECT_LIB_NAME ${PROJECT_NAME}_lib)
@@ -101,15 +106,15 @@ else ()
     endif()
 endif()
 
-# install(TARGETS helloworld_cli RUNTIME DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 
-# set(CPACK_GENERATOR DEB)
-# set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
-# set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-# set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
-# set(CPACK_PACKAGE_CONTACT example@example.com)
-# include(CPack)
+set(CPACK_GENERATOR DEB)
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+set(CPACK_PACKAGE_CONTACT example@example.com)
+include(CPack)
 
-# if(WITH_GOOGLE_TEST)
-#     add_test(test_version test_version)
-# endif()
+if(WITH_GOOGLE_TEST)
+    add_test(${PROJECT_TESTS_NAME} ${PROJECT_TESTS_NAME})
+endif()
